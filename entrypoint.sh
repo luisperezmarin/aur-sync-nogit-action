@@ -6,7 +6,7 @@ PACKAGE_NAME=$INPUT_PACKAGE_NAME
 COMMIT_USERNAME=$INPUT_COMMIT_USERNAME
 COMMIT_EMAIL=$INPUT_COMMIT_EMAIL
 SSH_PRIVATE_KEY=$INPUT_SSH_PRIVATE_KEY
-GITHUB_REPO=$INPUT_GITHUB_REPO
+URL_BIN=$INPUT_URL_BIN
 GITHUB_LOCAL_REPO=$INPUT_GITHUB_LOCAL_REPO
 
 HOME=/home/builder
@@ -30,8 +30,7 @@ cd "$PACKAGE_NAME"
 
 echo "------------- DIFF VERSION ----------------"
 
-RELEASE_VER=`curl -s https://api.github.com/repos/${GITHUB_REPO}/releases | jq -r .[0].tag_name`
-NEW_PKGVER="${RELEASE_VER:1}" # remove character 'v'
+NEW_PKGVER=`curl -s ${URL_BIN} |grep href |grep deb |grep -oE '([0-9]+\.)+' |sort |uniq |sed 's/\.$//g'`
 CURRENT_VER=`grep pkgver .SRCINFO | awk -F '=' '{print $2}' | tr -d "[:space:]"`
 
 echo "release version is "$NEW_PKGVER
