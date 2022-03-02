@@ -1,7 +1,7 @@
 # action.yml
-name: "AUR sync"
+name: "AUR sync No Git Packages"
 description: "Sync an AUR package with Github release"
-author: maniacata
+author: luisperezmarin
 branding:
   color: green
   icon: refresh-cw
